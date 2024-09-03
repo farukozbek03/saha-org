@@ -24,13 +24,17 @@ import {
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { useSearchParams } from 'next/navigation'
+import { useState } from "react"
 
 export const loginFormSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6, "Password must be at least 6 characters"),
 })
 
+
 export default function LoginCard() {
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get('redirectTo') || '/dashboard'
    
@@ -43,11 +47,20 @@ export default function LoginCard() {
   })
 
   const onSubmit = async (data: z.infer<typeof loginFormSchema>) => {
+    setIsLoading(true)
+    setError(null)
     const formData = new FormData()
     formData.append('email', data.email)
     formData.append('password', data.password)
     formData.append('redirectTo', redirectTo)
-    await login(formData)
+    try {
+      const result = await login(formData)
+      if (result?.error) {
+        setError(result.error)
+      }
+    } finally {
+      setIsLoading(false)
+    }
   }
    
   return (
@@ -56,6 +69,9 @@ export default function LoginCard() {
             <CardTitle>Login</CardTitle>
         </CardHeader>
         <CardContent>
+        {error && (
+          <div className="mb-4 text-red-500 text-sm">{error}</div>
+        )}
         <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
@@ -85,13 +101,16 @@ export default function LoginCard() {
           )}
         />
         <input type="hidden" name="redirectTo" value={redirectTo} />
-        <Button type="submit">Giriş Yap</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? "Giriş Yapılıyor..." : "Giriş Yap"}
+        </Button>
       </form>
     </Form>
         </CardContent>
         <CardFooter>
             <p className="">
-                Hesabınız yok mu?<Link className='ml-2 hover:text-primary hover:underline' href={'/signup'}> Kayıt Ol</Link> </p>
+                Hesabınız yok mu?<Link className='ml-2 hover:text-primary hover:underline' href={{ pathname:'/signup', query: { redirectTo: redirectTo } }}> Kayıt Ol</Link>
+            </p>
         </CardFooter>
     </Card>
   )

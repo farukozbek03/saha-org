@@ -40,7 +40,7 @@ export async function updateSession(request: NextRequest) {
     request.nextUrl.pathname !== '/'
   ) {
     const url = request.nextUrl.clone();
-    url.pathname = '/login';
+    url.pathname = request.nextUrl.pathname.startsWith('/signup') ? '/signup' : '/login';
     url.searchParams.set('redirectTo', request.nextUrl.pathname + request.nextUrl.search);
     return NextResponse.redirect(url);
   }

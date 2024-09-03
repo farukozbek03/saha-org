@@ -19,7 +19,7 @@ export async function login(formData: FormData) {
 
   if (error) {
     console.log('Error logging in')
-    redirect('/error')
+    return { error: 'Giriş Yapılamadı. Bilgilerinizi kontrol ediniz' }
   }
 
   console.log('Successfully logged in')
@@ -27,33 +27,36 @@ export async function login(formData: FormData) {
 }
 
 
-export async function signup(formData: FormData) {
+interface SignupResult {
+  error?: string;
+  success?: boolean;
+}
+
+export async function signup(formData: FormData): Promise<SignupResult> {
   const supabase = createClient()
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
   const data = {
     email: formData.get('email') as string,
     password: formData.get('password') as string,
-    options : {
+    options: {
       data: {
         display_name: formData.get('displayName') as string
       }
     }
   }
+  const redirectTo = formData.get('redirectTo') as string
 
   const { error } = await supabase.auth.signUp(data)
 
   if (error) {
     console.log('Error signed up')
-
-    redirect('/error')
-
+    return { error: 'Kayıt olunamadı. Lütfen bilgilerinizi kontrol edin.' }
   }
-  console.log('Successfully signed up')
 
+  console.log('Successfully signed up')
   revalidatePath('/', 'layout')
-  redirect('/')
+  redirect(redirectTo || '/dashboard')
+  return { success: true }
 }
 
 export async function signout()  {

@@ -22,7 +22,8 @@ export default async function Page() {
     return (
         <div className='flex flex-col h-screen'>
             <h1 className='text-2xl text-center font-bold'>Henüz herhangi bir gruba dahil değilsiniz.</h1>
-            <p className='text-sm text-center text-gray-500'>Yukardaki butona tıklayıp yeni bir grup oluşturabilir veya arkadaşınızın paylaştığı link ile gruba dahil olabilirsiniz.</p>
+            <p className='text-sm text-center text-gray-500 md:hidden'>Yukardaki butona tıklayıp yeni bir grup oluşturabilir veya arkadaşınızın paylaştığı link ile gruba dahil olabilirsiniz.</p>
+            <p className='text-sm text-center text-gray-500 hidden md:block'>Ekranın solundaki grup ekle butonuna tıklayıp yeni bir grup oluşturabilir veya arkadaşınızın paylaştığı link ile gruba dahil olabilirsiniz.</p>
         </div>
     );
 }

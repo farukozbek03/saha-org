@@ -1,9 +1,8 @@
 'use client'
-import { login, signup } from "@/app/login/actions"
+import { signup } from "@/app/login/actions"
 import {
     Card,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
@@ -15,7 +14,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -23,6 +21,12 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
+import { useSearchParams } from 'next/navigation'
+import { useState } from "react"
+
+interface SignupResult {
+  error?: string;
+}
 
 export const signUpFormSchema = z.object({
   displayName: z.string().min(2, "Display name must be at least 2 characters"),
@@ -35,6 +39,10 @@ export const signUpFormSchema = z.object({
 });
 
 export default function SignUpCard() {
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const searchParams = useSearchParams()
+  const redirectTo = searchParams.get('redirectTo') || '/dashboard'
    
   const form = useForm<z.infer<typeof signUpFormSchema>>({
     resolver: zodResolver(signUpFormSchema),
@@ -47,11 +55,21 @@ export default function SignUpCard() {
   })
 
   const onSubmit = async (data: z.infer<typeof signUpFormSchema>) => {
+    setIsLoading(true)
+    setError(null)
     const formData = new FormData()
     formData.append('displayName', data.displayName)
     formData.append('email', data.email)
     formData.append('password', data.password)
-    await signup(formData)
+    formData.append('redirectTo', redirectTo)
+    try {
+      const result = await signup(formData) as unknown as SignupResult;
+      if (result?.error) {
+        setError(result.error);
+      }
+    } finally {
+      setIsLoading(false)
+    }
   }
    
   return (
@@ -60,6 +78,9 @@ export default function SignUpCard() {
             <CardTitle>Sign Up</CardTitle>
         </CardHeader>
         <CardContent>
+        {error && (
+          <div className="mb-4 text-red-500 text-sm">{error}</div>
+        )}
         <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
@@ -114,13 +135,17 @@ export default function SignUpCard() {
             </FormItem>
           )}
         />
-        <Button type="submit">Sign Up</Button>
+        <input type="hidden" name="redirectTo" value={redirectTo} />
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? "Signing Up..." : "Sign Up"}
+        </Button>
       </form>
     </Form>
         </CardContent>
         <CardFooter>
             <p className="">
-                Already have an account?<Link className='ml-2 hover:text-primary hover:underline' href={'/login'}> Sign In</Link> </p>
+                Already have an account?<Link className='ml-2 hover:text-primary hover:underline' href={{ pathname:'/login', query: { redirectTo: redirectTo } }}> Sign In</Link>
+            </p>
         </CardFooter>
     </Card>
   )
