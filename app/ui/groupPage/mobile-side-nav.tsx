@@ -1,4 +1,7 @@
 import { Button } from "@/components/ui/button"
+import dynamic from 'next/dynamic'
+
+const GroupLinks = dynamic(() => import('./group-links'), { ssr: false })
 
 import {
   Sheet,
@@ -10,10 +13,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import GroupLinks from "./group-links"
-
-
-
 
 export function MobileSideNav() {
     return (
