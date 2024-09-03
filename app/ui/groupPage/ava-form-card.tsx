@@ -50,7 +50,7 @@ async function fetchFields(groupId: string): Promise<FieldForForm[]> {
     const availabilityData = await fetchUserAvailability(groupId, user.id)
   
     return (
-        <Card>
+        <Card className="mb-4">
         <CardHeader>
             <CardTitle>Uygunluk Formu</CardTitle>
             <CardDescription>Katılım sağlayabileceğiniz gün,saat aralığıve sahaları seçiniz.</CardDescription>

@@ -4,6 +4,10 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <section className="flex flex-col items-center justify-center mt-8"><h1> Dashboarda Git </h1><Link href='/dashboard'><Button >Button</Button></Link></section>
+    <section className="flex flex-col items-center justify-center mt-8">
+      <h1 className="text-2xl font-bold mb-2"> SahaOrg&apos;a Hoşgeldiniz </h1>
+      <h3 className="text-lg mb-2">Grup oluştur. Link paylaş. Maç ayarlansın.</h3>
+      <Link href='/dashboard'>
+      <Button >Gruplara Git</Button></Link></section>
   );
 }

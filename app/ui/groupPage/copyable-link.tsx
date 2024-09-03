@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { CheckCircle } from 'lucide-react';
 
 export default function CopyableLink({ groupId }: { groupId: string }) {
     const [copied, setCopied] = useState(false);
@@ -15,19 +16,20 @@ export default function CopyableLink({ groupId }: { groupId: string }) {
     };
 
     return (
-        <div className='mb-4'>
-        <Button onClick={handleCopyLink} variant="outline">
-            {copied ? (
-                <>
-                    Link Kopyalandı!
-                </>
-            ) : (
-                <>
-                    Paylaşmak İçin Linki Kopyala
-                </>
-            )}
-        </Button>
+        <div className='mb-4 flex flex-col items-center text-center'>
+            <p className='mb-2 text-sm font-bold text-primary'>Gruba davet etmek için linki kopyalayınız</p>
+
+            <Button onClick={handleCopyLink} variant="outline" className='border-primary'>
+                {copied ? (
+                    <>
+                        <CheckCircle className="mr-2" /> Link Kopyalandı!
+                    </>
+                ) : (
+                    <>
+                        Paylaşmak İçin Linki Kopyala
+                    </>
+                )}
+            </Button>
         </div>
-       
     );
 }

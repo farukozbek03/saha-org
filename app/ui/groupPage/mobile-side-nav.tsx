@@ -20,11 +20,11 @@ export function MobileSideNav() {
         <div className="md:hidden mx-4 mt-4">
       <Sheet>
         <SheetTrigger asChild>
-          <Button className="w-full" variant="default">Gruplar <ArrowDown className='w-4 h-4 ml-2' /></Button>
+          <Button className="w-full" variant="default">Gruplarım <ArrowDown className='w-4 h-4' /></Button>
         </SheetTrigger>
         <SheetContent side='top'>
           <SheetHeader>
-            <SheetTitle>Gruplar</SheetTitle>
+            <SheetTitle className='mb-4'>Gruplarım</SheetTitle>
             
           </SheetHeader>
           <GroupLinks />

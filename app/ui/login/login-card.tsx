@@ -66,7 +66,7 @@ export default function LoginCard() {
   return (
     <Card>
         <CardHeader>
-            <CardTitle>Login</CardTitle>
+            <CardTitle>Giriş Yap</CardTitle>
         </CardHeader>
         <CardContent>
         {error && (
@@ -92,7 +92,7 @@ export default function LoginCard() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Şifre</FormLabel>
               <FormControl>
                 <Input type="password" placeholder="" {...field} />
               </FormControl>

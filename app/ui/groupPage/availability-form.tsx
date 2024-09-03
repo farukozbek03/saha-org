@@ -176,7 +176,7 @@ export default function AvaFrom({fields,groupId,defaultValues} : {fields: FieldF
               <FormItem>
                 <div className="mb-4">
                   <FormLabel className="text-base">Tarihler</FormLabel>
-                  <FormDescription>
+                  <FormDescription >
                     Uygun olduğunuz tarihleri seçiniz.
                   </FormDescription>
                 </div>
@@ -192,6 +192,10 @@ export default function AvaFrom({fields,groupId,defaultValues} : {fields: FieldF
           />
           
           <div className=''>
+              <FormLabel className="text-base">Saat Aralığı</FormLabel>
+                  <FormDescription className='mb-4'>
+                    Uygun olduğunuz saat aralığını seçiniz.
+                  </FormDescription>
             <FormField
               control={form.control}
               name="start_time"
@@ -201,7 +205,7 @@ export default function AvaFrom({fields,groupId,defaultValues} : {fields: FieldF
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select start time" />
+                        <SelectValue placeholder="Başlangıç zamanı seçiniz" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -223,7 +227,7 @@ export default function AvaFrom({fields,groupId,defaultValues} : {fields: FieldF
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select end time" />
+                        <SelectValue placeholder="Bitiş zamanı seçiniz" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>

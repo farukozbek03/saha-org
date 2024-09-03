@@ -75,7 +75,7 @@ export default function SignUpCard() {
   return (
     <Card>
         <CardHeader>
-            <CardTitle>Sign Up</CardTitle>
+            <CardTitle>Kayıt Ol</CardTitle>
         </CardHeader>
         <CardContent>
         {error && (
@@ -88,7 +88,7 @@ export default function SignUpCard() {
           name="displayName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Display Name</FormLabel>
+              <FormLabel>İsim</FormLabel>
               <FormControl>
                 <Input placeholder="John Doe" {...field} />
               </FormControl>
@@ -114,7 +114,7 @@ export default function SignUpCard() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Şifre</FormLabel>
               <FormControl>
                 <Input type="password" placeholder="" {...field} />
               </FormControl>
@@ -127,7 +127,7 @@ export default function SignUpCard() {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
+              <FormLabel>Şifreyi Doğrula</FormLabel>
               <FormControl>
                 <Input type="password" placeholder="" {...field} />
               </FormControl>
@@ -144,7 +144,7 @@ export default function SignUpCard() {
         </CardContent>
         <CardFooter>
             <p className="">
-                Already have an account?<Link className='ml-2 hover:text-primary hover:underline' href={{ pathname:'/login', query: { redirectTo: redirectTo } }}> Sign In</Link>
+                Zaten hesabınız var mı?<Link className='ml-2 hover:text-primary hover:underline' href={{ pathname:'/login', query: { redirectTo: redirectTo } }}>Giriş Yap</Link>
             </p>
         </CardFooter>
     </Card>

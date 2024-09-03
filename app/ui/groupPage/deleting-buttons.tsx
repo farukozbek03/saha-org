@@ -53,7 +53,7 @@ export default function DeleteButtons({ groupId }: { groupId: string }) {
                     <AlertDialogHeader>
                         <AlertDialogTitle>Maçları silmek istediğinize emin misiniz?</AlertDialogTitle>
                         <AlertDialogDescription>
-                            Maçları silerseniz bunun geri dönüşü olmayacaktır. Bütün tercihler sıfırlanacaktır.
+                            Maçları silerseniz bunun geri dönüşü olmayacaktır. Gruptaki herkesin maç tercihleri sıfırlanacaktır.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>

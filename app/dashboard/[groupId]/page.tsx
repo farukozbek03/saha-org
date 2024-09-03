@@ -15,25 +15,20 @@ import InfoCard from '@/app/ui/groupPage/info-card';
 
 
 export default async function Page({ params }: { params: { groupId: string } }) {
- 
   const id = params.groupId;
-
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <div className='md:grid md:grid-cols-12 space-x-8'>
-        <div className='flex flex-col mb-4 md:col-span-5 md:col-start-1'>
+      <div className='md:grid md:grid-cols-12 gap-8 justify-items-center'>
+        <div className='flex flex-col mb-4 md:col-span-4'>
           <InfoCard groupId={id}/>
         </div>
-        <div className='md:col-span-4 '>
+        <div className='md:col-span-4'>
           <AvaFormCard groupId={id}/>
         </div>
-
-        <div className='md:col-span-3'>
+        <div className='md:col-span-4'>
           <GroupCard groupId={id}/>
         </div>
-
-        
       </div>
     </Suspense>
   );
