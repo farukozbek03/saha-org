@@ -24,7 +24,6 @@ export default async function Page({ params }: { params: { groupId: string } }) 
     <Suspense fallback={<div>Loading...</div>}>
       <div className='md:grid md:grid-cols-12 space-x-8'>
         <div className='flex flex-col mb-4 md:col-span-5 md:col-start-1'>
-        
           <InfoCard groupId={id}/>
         </div>
         <div className='md:col-span-4 '>

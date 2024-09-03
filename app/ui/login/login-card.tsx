@@ -85,13 +85,13 @@ export default function LoginCard() {
           )}
         />
         <input type="hidden" name="redirectTo" value={redirectTo} />
-        <Button type="submit">Login</Button>
+        <Button type="submit">Giriş Yap</Button>
       </form>
     </Form>
         </CardContent>
         <CardFooter>
             <p className="">
-                Don't have an account?<Link className='ml-2 hover:text-primary hover:underline' href={'/signup'}> Sign Up</Link> </p>
+                Hesabınız yok mu?<Link className='ml-2 hover:text-primary hover:underline' href={'/signup'}> Kayıt Ol</Link> </p>
         </CardFooter>
     </Card>
   )
