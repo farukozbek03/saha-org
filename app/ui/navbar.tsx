@@ -22,11 +22,11 @@ export default async function Navbar() {
           </div>
           {user !== null ? (
             <form action={signout} className='justify-end flex flex-row gap-4 items-center'>  
-            <p>{user.email}</p>
-            <Button type='submit' variant='secondary'>Sign Out</Button>
+            <p className='hidden md:block'>{user.email}</p>
+            <Button type='submit' variant='secondary'>Çıkış Yap</Button>
             </form>
           ): (
-           <Link href={'/login'}> <Button variant='default'>Sign In</Button></Link>
+           <Link href={'/login'}> <Button variant='default'>Giriş Yap</Button></Link>
           )}
           
         </div>
