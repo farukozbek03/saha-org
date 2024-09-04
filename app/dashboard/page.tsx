@@ -10,7 +10,6 @@ export default async function Page() {
     }
     if (error) throw error
     if (!user) {
-        console.log('No user is currently signed in')
         redirect('/login')
     }
     const userId = user.id

@@ -14,7 +14,6 @@ export default async function GroupLinks() {
   const {data : {user},error} = await supabase.auth.getUser()
   if (error) throw error
   if (!user) {
-    console.log('No user is currently signed in')
     redirect('/login')
   }
   const userId = user.id
