@@ -109,18 +109,21 @@ export default function AvaFrom({fields,groupId,defaultValues} : {fields: FieldF
       
       if (result.success) {
         console.log('All availabilities created successfully:', result.results);
-        // You might want to add some user feedback here, like a success message
+        window.scrollTo(0, 0);
         toast({
           title: "Başarılı",
-          description: "Talepleriniz gönderildi.",
+          description: "Uygunluklarınız başarıyla oluşturuldu.",
         });
       } else {
-        console.error('Some availabilities failed to create:', result.errors);
-        // You might want to add some user feedback here, like an error message
+        console.error('Uygunluk oluşturulurken bir hata oluştu:', result.errors);
+        toast({
+          title: "Başarısız",
+          description: "Uygunluk oluşturulurken bir hata oluştu:",
+          variant: "destructive",
+        });
       }
     } catch (error) {
-      console.error('An error occurred while submitting the form:', error);
-      // You might want to add some user feedback here, like an error message
+      console.error('Uygunluk oluşturulurken bir hata oluştu:', error);
     } finally {
       setIsLoading(false);
     }

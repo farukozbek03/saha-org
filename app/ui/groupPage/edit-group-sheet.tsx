@@ -31,9 +31,9 @@ const groupFormSchema = z.object({
   description: z.string(),
   fields: z.array(
     z.object({
-        id: z.string().nullable(),
+      id: z.string().nullable(),
       field_name: z.string().min(1, { message: 'Alan adı gereklidir' }),
-      field_location: z.string().min(1, { message: 'Alan konumu gereklidir' }),
+      field_location: z.string().optional(),
     })
   ).min(1, { message: 'En az bir alan gereklidir' }),
 });

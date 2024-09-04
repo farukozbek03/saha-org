@@ -13,29 +13,40 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { fetchGroupName } from "@/app/lib/data"
-
-
-
+import { fetchGroupName, isGroupMember } from "@/app/lib/data";
+import { createClient } from '@/utils/supabase/client';
 
 export default function AddGroup() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [groupName, setGroupName] = useState({ name: '', desc: '' });
+    const supabase = createClient();
 
     useEffect(() => {
         async function fetchData() {
             const groupId = searchParams.get('groupid');
-            if (groupId) {
-                const fetchedGroupName = await fetchGroupName(groupId);
-                setGroupName(fetchedGroupName);
-            } else {
+            if (!groupId) {
                 router.push('/dashboard');
+                return;
+            }
+
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) {
+                router.push('/login');
+                return;
+            }
+
+            const fetchedGroupName = await fetchGroupName(groupId);
+            setGroupName(fetchedGroupName);
+
+            const isMember = await isGroupMember(groupId, user.id);
+            if (isMember) {
+                router.push(`/dashboard/${groupId}`);
             }
         }
 
         fetchData();
-    }, [searchParams, router]);
+    }, [searchParams, router, supabase.auth]);
 
     const handleJoinGroup = async () => {
         try {
@@ -69,7 +80,8 @@ export default function AddGroup() {
                     </Button>
                 </CardContent>
                 <CardFooter className="text-center">
-                    {/* Additional footer content can go here */}
+
+
                 </CardFooter>
             </Card>
         </div>

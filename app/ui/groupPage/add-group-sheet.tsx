@@ -25,6 +25,8 @@ import {
 import { createNewGroup } from '@/app/lib/action';
 import { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from '@/components/ui/toast';
+import { useRouter } from 'next/navigation';
 
 const groupFormSchema = z.object({
   name: z.string().min(2, { message: 'Grup adınız en az 2 harften oluşmalıdır' }),
@@ -32,7 +34,7 @@ const groupFormSchema = z.object({
   fields: z.array(
     z.object({
       field_name: z.string().min(1, { message: 'Alan adı gereklidir' }),
-      field_location: z.string().min(1, { message: 'Alan konumu gereklidir' }),
+      field_location: z.string().optional(),
     })
   ).min(1, { message: 'En az bir alan gereklidir' }),
 });
@@ -59,6 +61,8 @@ export default function AddGroupSheet() {
     name: "fields",
   });
 
+  const router = useRouter();
+
   const onSubmit = async (data: GroupFormValues) => {
     setIsSubmitting(true);
     try {
@@ -75,7 +79,11 @@ export default function AddGroupSheet() {
         });
         setIsOpen(false);
         form.reset();
+        router.push(`/dashboard/${result.group.id}`)
+        // Scroll to top of the page
       } else {
+        console.log(result)
+
         toast({
           title: "Hata",
           description: "Grup oluşturulurken bir hata oluştu.",
@@ -83,6 +91,8 @@ export default function AddGroupSheet() {
         });
       }
     } catch (error) {
+      console.log(error)
+
       toast({
         title: "Hata",
         description: "Beklenmeyen bir hata oluştu.",
@@ -136,38 +146,35 @@ export default function AddGroupSheet() {
             <div>
               <FormLabel className='mb-4'>Sahalar</FormLabel>
               {fields.map((field, index) => (
-                <div key={field.id} className="flex flex-col space-y-2 mb-4">
-                  <div className="flex space-x-2">
-                    <FormField
-                      control={form.control}
-                      name={`fields.${index}.field_name`}
-                      render={({ field }) => (
-                        <FormItem className="flex-1">
-                          <FormControl>
-                            <Input placeholder="Saha adı" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`fields.${index}.field_location`}
-                      render={({ field }) => (
-                        <FormItem className="flex-1">
-                          <FormControl>
-                            <Input placeholder="Konumu" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    {index > 0 && (
-                      <Button type="button" variant="destructive" onClick={() => remove(index)}>
-                        Sil
-                      </Button>
+                <div key={field.id} className="flex space-x-2 mb-2">
+                  <FormField
+                    control={form.control}
+                    name={`fields.${index}.field_name`}
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormControl>
+                          <Input placeholder="Saha adı" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
                     )}
-                  </div>
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`fields.${index}.field_location`}
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormControl>
+                          <Input placeholder="Konumu" {...field} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  {index > 0 && (
+                    <Button type="button" variant="destructive" onClick={() => remove(index)}>
+                      Sil
+                    </Button>
+                  )}
                 </div>
               ))}
               <Button

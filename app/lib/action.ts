@@ -29,7 +29,7 @@ export async function createNewGroup(formData: FormData) {
                 if (fieldsError) throw fieldsError
             }
             revalidatePath('/dashboard')
-            return { success: true, group: data }
+            return { success: true, group: data }            
     
         } catch (error: any) {
             console.error('Error in createNewGroup:', error)
