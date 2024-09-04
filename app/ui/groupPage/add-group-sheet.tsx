@@ -122,7 +122,7 @@ export default function AddGroupSheet() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Grup Adı</FormLabel>
+                  <FormLabel>Grup Adı*</FormLabel>
                   <FormControl>
                     <Input placeholder="Halısaha Grubu" {...field} />
                   </FormControl>
@@ -137,7 +137,7 @@ export default function AddGroupSheet() {
                 <FormItem>
                   <FormLabel>Grup Açıklaması</FormLabel>
                   <FormControl>
-                    <Input placeholder="Açıklama" {...field} />
+                    <Input placeholder="Açıklama (Opsiyonel)" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -153,7 +153,7 @@ export default function AddGroupSheet() {
                     render={({ field }) => (
                       <FormItem className="flex-1">
                         <FormControl>
-                          <Input placeholder="Saha adı" {...field} />
+                          <Input placeholder="Saha adı*" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -165,7 +165,7 @@ export default function AddGroupSheet() {
                     render={({ field }) => (
                       <FormItem className="flex-1">
                         <FormControl>
-                          <Input placeholder="Konumu" {...field} />
+                          <Input placeholder="Konumu (Opsiyonel)" {...field} />
                         </FormControl>
                       </FormItem>
                     )}
@@ -187,6 +187,7 @@ export default function AddGroupSheet() {
               </Button>
             </div>
             <SheetFooter>
+              <p className='text-sm text-gray-500'> * Bu alanları doldurmak zorunludur.</p>
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Grup Oluşturuluyor...' : 'Grup Oluştur'}
               </Button>
