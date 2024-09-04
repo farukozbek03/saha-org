@@ -29,7 +29,6 @@ export default async function OrgTable({ groupId }: { groupId: string }) {
            commonTimeSlots[i].group_field_id = await fetchFieldName(commonTimeSlots[i].group_field_id);
            commonTimeSlots[i].user_ids = await fetchDisplayName(commonTimeSlots[i].user_ids)
         }
-        console.log(commonTimeSlots[0]?.user_ids)
         return (
             <div className="flex w-full">
             <Table>

@@ -26,6 +26,7 @@ import { Calendar } from "@/components/ui/calendar"
 import {createAvailabilities} from '@/app/lib/action'
 import { useEffect, useState } from 'react';
 import {fetchUserAvailability} from '@/app/lib/data'
+import { useToast } from "@/hooks/use-toast"
 
 // Updated FormSchema to make start_time and end_time required
 const FormSchema = z.object({
@@ -69,6 +70,7 @@ type DefaultValues = {
   end_time: string;
 }
 export default function AvaFrom({fields,groupId,defaultValues} : {fields: FieldForForm[],groupId : string,defaultValues : DefaultValues}) {
+  const { toast } = useToast()
   const[isLoading,setIsLoading] = useState(false)
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -108,6 +110,10 @@ export default function AvaFrom({fields,groupId,defaultValues} : {fields: FieldF
       if (result.success) {
         console.log('All availabilities created successfully:', result.results);
         // You might want to add some user feedback here, like a success message
+        toast({
+          title: "Başarılı",
+          description: "Talepleriniz gönderildi.",
+        });
       } else {
         console.error('Some availabilities failed to create:', result.errors);
         // You might want to add some user feedback here, like an error message

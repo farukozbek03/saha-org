@@ -17,8 +17,6 @@ export async function createNewGroup(formData: FormData) {
     
             if (error) throw error
     
-            console.log('Group created successfully:', data)
-    
             // Now insert the fields
             if (data && data.id) {
                 const { error: fieldsError } = await supabase
@@ -73,9 +71,7 @@ export async function createAvailabilities(formData: FormData, groupId: string) 
                     if (error) throw error
                     
                     results.push(data)
-                    console.log('Availability created:', data)
                 } catch (error) {
-                    console.error('Error creating availability:', error)
                     errors.push({ field_id, date, error })
                 }
             }
@@ -110,13 +106,11 @@ export async function addToGroup(groupId: string) {
     revalidatePath('/dashboard');
 
   } catch (error) {
-    console.error('Error in addToGroup:', error);
     throw new Error('Failed to add to group');
   }
 }
 
 export async function updateGroup(formData: FormData, groupId: string) {
-        console.log(formData)
         const supabase = createClient()
         
         const id = groupId
@@ -134,17 +128,13 @@ export async function updateGroup(formData: FormData, groupId: string) {
     
             if (error) throw error
     
-            console.log('Group updated successfully:', data)
     
             // Update the fields
             if (data && data[0]) {
                 // Separate fields into those to update and those to insert
                 const fieldsToUpdate = fields.filter((field: any) => field.id != null);
                 const fieldsToInsert = fields.filter((field: any) => field.id == null);
-                console.log('fields to update')
-                console.log(fieldsToUpdate)
-                console.log('fields to insert')
-                console.log(fieldsToInsert)
+               
                 
                 // Update existing fields
                 if (fieldsToUpdate.length > 0) {

@@ -34,7 +34,6 @@ async function fetchFields(groupId: string): Promise<FieldForForm[]> {
     const {data : {user}} = await supabase.auth.getUser()
     const id = groupId;
     if (!user) {
-      console.log('No user is currently signed in');
       redirect('/login')
     }
     const isMember = await isGroupMember(id, user.id);

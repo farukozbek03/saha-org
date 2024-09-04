@@ -18,11 +18,9 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data)
 
   if (error) {
-    console.log('Error logging in')
     return { error: 'Giriş Yapılamadı. Bilgilerinizi kontrol ediniz' }
   }
 
-  console.log('Successfully logged in')
   redirect(redirectTo || '/dashboard')
 }
 
@@ -49,11 +47,9 @@ export async function signup(formData: FormData): Promise<SignupResult> {
   const { error } = await supabase.auth.signUp(data)
 
   if (error) {
-    console.log('Error signed up')
     return { error: 'Kayıt olunamadı. Lütfen bilgilerinizi kontrol edin.' }
   }
 
-  console.log('Successfully signed up')
   revalidatePath('/', 'layout')
   redirect(redirectTo || '/dashboard')
   return { success: true }

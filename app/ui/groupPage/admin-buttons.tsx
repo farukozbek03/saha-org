@@ -6,8 +6,7 @@ export default async function AdminButtons({groupId} : {groupId : string}) {
     const supabase = await createClient()
     const {data : {user}} = await supabase.auth.getUser()
     const adminId = await fetchGroupAdmin(groupId)
-    console.log(adminId)
-    console.log(typeof adminId)
+   
     if ( user!.id !== adminId) {
         return <></>
     }else {
