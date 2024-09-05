@@ -44,22 +44,16 @@ export async function MobileSideNav() {
           
           <Suspense fallback={<div>Loading...</div>}>
       
-            {links.map((link) => {
-              return (
-                <SheetClose asChild>
+            {links.map((link) => (
+              <SheetClose key={link.id} asChild>
                 <Link
-                  key={link.id}
                   href={`/dashboard/${link.id}`}
-                  className=
-                    'flex h-[48px] grow items-center justify-center gap-2 rounded-md  hover:bg-accent-foreground hover:text-accent md:flex-none md:justify-start md:p-2 md:px-3'
-                  
+                  className='flex h-[48px] grow items-center justify-center gap-2 rounded-md hover:bg-accent-foreground hover:text-accent md:flex-none md:justify-start md:p-2 md:px-3'
                 >
-                  <p className=" md:block">{link.name}</p>
-                
+                  <p className="md:block">{link.name}</p>
                 </Link>
-                </SheetClose>
-              );
-            })}
+              </SheetClose>
+            ))}
             <div className='flex justify-center mx-2 mt-2'>
               <SheetClose asChild>
                 <AddGroupSheet/>
