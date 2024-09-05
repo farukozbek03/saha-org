@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button'
 import Link from 'next/link';
 import clsx from 'clsx'
@@ -7,7 +6,6 @@ import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import AddGroupSheet from '@/app/ui/groupPage/add-group-sheet';
 import { Suspense } from 'react';
-
 
 export default async function GroupLinks() {
   const supabase = await createClient()

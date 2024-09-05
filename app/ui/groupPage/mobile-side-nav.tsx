@@ -1,7 +1,13 @@
 import { Button } from "@/components/ui/button"
-import dynamic from 'next/dynamic'
+import GroupLinks from "./group-links"
+import Link from 'next/link';
+import clsx from 'clsx'
+import { fetchGroupsById} from '@/app/lib/data';
+import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
+import AddGroupSheet from '@/app/ui/groupPage/add-group-sheet';
+import { Suspense } from 'react';
 
-const GroupLinks = dynamic(() => import('./group-links'), { ssr: false })
 
 import {
   Sheet,
@@ -15,7 +21,15 @@ import {
 } from "@/components/ui/sheet"
 import {ArrowDown} from 'lucide-react'
 
-export function MobileSideNav() {
+export async function MobileSideNav() {
+  const supabase = await createClient()
+  const {data : {user},error} = await supabase.auth.getUser()
+  if (error) throw error
+  if (!user) {
+    redirect('/login')
+  }
+  const userId = user.id
+  const links = await fetchGroupsById(userId)
     return (
         <div className="md:hidden mx-4 mt-4">
       <Sheet>
@@ -27,7 +41,32 @@ export function MobileSideNav() {
             <SheetTitle className='mb-4'>Gruplarım</SheetTitle>
             
           </SheetHeader>
-          <GroupLinks />
+          
+          <Suspense fallback={<div>Loading...</div>}>
+      
+            {links.map((link) => {
+              return (
+                <SheetClose asChild>
+                <Link
+                  key={link.id}
+                  href={`/dashboard/${link.id}`}
+                  className=
+                    'flex h-[48px] grow items-center justify-center gap-2 rounded-md  hover:bg-accent-foreground hover:text-accent md:flex-none md:justify-start md:p-2 md:px-3'
+                  
+                >
+                  <p className=" md:block">{link.name}</p>
+                
+                </Link>
+                </SheetClose>
+              );
+            })}
+            <div className='flex justify-center mx-2 mt-2'>
+              <SheetClose asChild>
+                <AddGroupSheet/>
+              </SheetClose>
+            </div>
+            
+          </Suspense>
           
         </SheetContent>
       </Sheet>

@@ -25,7 +25,6 @@ import {
 import { createNewGroup } from '@/app/lib/action';
 import { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
-import { ToastAction } from '@/components/ui/toast';
 import { useRouter } from 'next/navigation';
 
 const groupFormSchema = z.object({

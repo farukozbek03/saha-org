@@ -27,6 +27,7 @@ import {createAvailabilities} from '@/app/lib/action'
 import { useEffect, useState } from 'react';
 import {fetchUserAvailability} from '@/app/lib/data'
 import { useToast } from "@/hooks/use-toast"
+import { DateRange } from "react-day-picker"
 
 // Updated FormSchema to make start_time and end_time required
 const FormSchema = z.object({
@@ -128,6 +129,11 @@ export default function AvaFrom({fields,groupId,defaultValues} : {fields: FieldF
       setIsLoading(false);
     }
   };
+
+  const disablePastDates = (date: Date) => {
+    return date < new Date(new Date().setHours(0, 0, 0, 0));
+  };
+
   return (
     <div>
       <Form {...form}>
@@ -193,6 +199,7 @@ export default function AvaFrom({fields,groupId,defaultValues} : {fields: FieldF
                   mode="multiple"
                   selected={field.value}
                   onSelect={field.onChange}
+                  disabled={disablePastDates}
                   className="rounded-md border"
                 />
                 <FormMessage />
