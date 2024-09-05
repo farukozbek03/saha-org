@@ -15,21 +15,35 @@ interface Result {
   user_ids: string[];
 }
 
+function formatTime(time: string): string {
+  // If the time is already in HH:MM format, return it
+  if (/^\d{2}:\d{2}$/.test(time)) {
+    return time;
+  }
+  // If the time is in HH:MM:SS format, remove the seconds
+  if (/^\d{2}:\d{2}:\d{2}$/.test(time)) {
+    return time.substring(0, 5);
+  }
+  // If it's in any other format, try to parse it and format to HH:MM
+  const [hours, minutes] = time.split(':').map(Number);
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+}
+
 function findMostCommonTimeSlots(availabilityList: Availability[]): Result[] {
   function generateHourlySlots(start: string, end: string): string[] {
     const slots: string[] = [];
-    let current = new Date(`2000-01-01T${start}`);
-    let endTime = new Date(`2000-01-01T${end}`);
+    let current = new Date(`2000-01-01T${formatTime(start)}`);
+    let endTime = new Date(`2000-01-01T${formatTime(end)}`);
 
     // If end time is before start time, assume it's the next day
     if (endTime <= current) {
-      endTime = new Date(`2000-01-02T${end}`);
+      endTime = new Date(`2000-01-02T${formatTime(end)}`);
     }
 
     while (current < endTime) {
       const slotStart = current.toTimeString().slice(0, 5);
       current.setHours(current.getHours() + 1);
-      const slotEnd = current < endTime ? current.toTimeString().slice(0, 5) : end;
+      const slotEnd = current < endTime ? current.toTimeString().slice(0, 5) : formatTime(end);
       slots.push(`${slotStart}-${slotEnd}`);
     }
 
@@ -59,7 +73,7 @@ function findMostCommonTimeSlots(availabilityList: Availability[]): Result[] {
   availabilityList.forEach(item => {
     const dateOnly = extractDateOnly(item.date);
     const key = `${item.group_field_id}|${dateOnly}`;
-    const slots = generateHourlySlots(item.start_time, item.end_time);
+    const slots = generateHourlySlots(formatTime(item.start_time), formatTime(item.end_time));
     
     slots.forEach(slot => {
       const fullKey = `${key}|${slot}`;
